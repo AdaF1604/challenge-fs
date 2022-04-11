@@ -1,0 +1,58 @@
+<%- include("templates/cabecera", {tituloWeb: 'movimientos'}) %>
+
+    <div class= "container">
+
+        <h1>Balance</h1>
+
+        <a class="btn btn-success btn-block my-4"
+           href="/crear">
+        
+           
+            Ingresar nuevo movimiento
+        </a>
+
+    <div class="table-responsive">
+        <table class="table align-middle">
+        <table class="table table-success table-striped table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Concepto</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Monto</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Accion</th>
+
+              </tr>
+            </thead>
+            <tbody>
+                <% if (arrayMovimientos.length > 0) { %>
+                    <% arrayMovimientos.forEach(movimientos => { %>
+                        <tr>
+                            <th scope="row"><%= movimientos.id %></th>
+                            <td><%= movimientos.Concepto  %></td>
+                            <td><%= movimientos.Fecha  %></td>
+                            <td><%= movimientos.Monto  %></td>
+                            <td><%= movimientos.Tipo %></td>
+                            <td>
+                                <a href="movimientos/<%= movimientos.id %>"
+                                class="btn btn-warning btn-sm"
+                                >Editar</a>
+                            </td>
+
+                        </tr>
+                          
+                        
+                    <% }) %>
+                <% } %>
+
+
+              
+
+
+
+
+     
+     
+    </div>
+<%- include("templates/footer") %> 

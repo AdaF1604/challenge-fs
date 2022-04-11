@@ -1,0 +1,148 @@
+<%- include("templates/cabecera", {tituloWeb: 'Detalle del movimiento'}) %>
+
+    <div class="container">
+        <h1>Detalle Movimiento</h1>
+        <% if (error) { %>
+            
+            <%= mensaje %>
+            
+            <a href="/movimientos" class="btn btn-darck btn-block">Volver a movimientos</a>
+            <%} %>
+
+            <% if (!error) { %>
+        
+                <form id="formEditar" data-id="<%= movimientos.id %>">
+                    <input 
+                        type="text"
+                        class="form-control my-2"
+                        name="concepto"
+                        value="<%= movimientos.Concepto %>"
+                        id="conceptoInput"
+                    >
+                    <input 
+                        type="number"
+                        class="form-control my-2"
+                        name="monto"
+                        value="<%= movimientos.Monto %>"
+                        id="montoInput"
+                    >
+                    <input 
+                        type="date"
+                        class="form-control my-2"
+                        name="fecha"
+                        value="<%= movimientos.Fecha %>"
+                        id="fechaInput"
+                    >
+                    
+                    <button
+                        class="btn btn-warning btn-block"
+                        id="btnEditar"
+                        type="submit">
+                        
+                        Editar
+                    </button>
+            
+                
+                <button
+                    class="btn btn-danger btn-sm mt-5"
+                    id="btnEliminar"
+                    data-id="<%= movimientos.id %>"
+                >
+                    Eliminar
+                </button>
+            </form>
+
+            <% } %>
+
+        </div>
+        
+     
+
+            
+
+
+    <script>
+
+        const btnEliminar = document.querySelector('#btnEliminar')
+    
+        btnEliminar.addEventListener('click', async() => {
+            console.log('me diste click')
+            const id = btnEliminar.dataset.id
+            console.log('id', id)
+            try {
+                const data = await fetch(`/movimientos/${id}`, {
+                    method: 'delete'
+                })
+                const res = await data.json()
+                
+                if(res.estado){
+                    window.location.href = '/movimientos'
+                }else {
+                    console.log(res)
+                }
+    
+            } catch (error) {
+                console.log(error)
+            }
+        })
+    
+        const formEditar = document.querySelector('#formEditar')
+    
+        formEditar.addEventListener('submit', async(e) => {
+            e.preventDefault()
+            
+            const concepto = document.querySelector['#conceptoInput'].value
+            const monto = document.querySelector('#montoInput').value
+            const fecha = document.querySelector('#fechaInput').value
+            const id = formEditar.dataset.id
+            
+            try {
+                const data = await fetch(`/movimientos/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({Concepto:string, Fecha:data, Monto: number, Tipo:string })
+                })
+                const res = await data.json()
+                
+                if(res.estado){
+                    window.location.href = '/movimientos'
+                }else{
+                    console.log(res)
+                }
+            } catch (error) {
+                console.log(error)
+            }
+    
+        })
+
+    router.put('/:id', async (req, res) => {
+    const id = req.params.id;
+    const body = req.body;
+
+    console.log(id)
+    console.log('body', body)
+
+    try {
+        const movimientosDB = await movimientos.findByIdAndUpdate(
+            id, body, { useFindAndModify: false }
+        )
+        console.log(movimientosDB)
+        res.json({
+            estado: true,
+            mensaje: 'Movimiento editado'
+        })
+    } catch (error) {
+        console.log(error)
+        res.json({
+            estado: false,
+            mensaje: 'Movimiento falla'
+        })
+    }
+})
+
+    
+    </script>      
+
+<%- include("templates/footer") %>

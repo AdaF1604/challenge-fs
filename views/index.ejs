@@ -1,0 +1,54 @@
+<%- include("templates/cabecera", {tituloWeb: 'Pagina de inicio'}) %>
+
+    <h1 class="text-primary text-center">Mis Finanzas</h1>
+
+    <h3><%= titulo %></h3>
+
+    <p>Es importante llevar un control de tu economia personal o negocio</p>
+    
+
+    <div class="container">
+        
+      <h2>Crear</h2>
+      
+      <form action="/movimientos" method="POST">
+          <input  
+              type="text"
+              placeholder="Concepto"
+              class="form-control my-2"
+              name="Concepto"
+          >
+          
+          <input 
+          type="date"
+          placeholder="Fecha"
+          class="form-control my-2"
+          name="Fecha"
+      >
+         <input 
+         type="number"
+         placeholder="Monto $"
+         class="form-control my-2"
+         name="Monto"
+  > 
+
+      <input
+          type="text"
+          placeholder="Ingreso o Egreso"
+          class="form-control my-2"
+          name="Tipo"
+
+      >
+
+
+          <button
+              class="btn btn-success btn-block"
+              type="submit"
+          >
+              Agregar
+          </button>
+      </form>
+  </div>
+  
+   
+<%- include("templates/footer") %> 
